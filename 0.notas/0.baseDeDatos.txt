@@ -1,0 +1,332 @@
+Sábado 01/07/2023 -> Inicio del proyecto 
+
+DROP DATABASE IF EXISTS finances;
+CREATE DATABASE finances;
+
+USE finances;
+ALTER TABLE users AUTO_INCREMENT = 1;
+
+USE finances;
+ALTER TABLE accounts AUTO_INCREMENT = 1;
+
+USE accounts;
+ALTER TABLE categories AUTO_INCREMENT = 1;
+
+USE finances;
+ALTER TABLE subcategories AUTO_INCREMENT = 1;
+
+USE finances;
+ALTER TABLE items AUTO_INCREMENT = 1;
+
+USE finances;
+ALTER TABLE users AUTO_INCREMENT = 1;
+ALTER TABLE accounts AUTO_INCREMENT = 1;
+ALTER TABLE categories AUTO_INCREMENT = 1;
+ALTER TABLE subcategories AUTO_INCREMENT = 1;
+ALTER TABLE items AUTO_INCREMENT = 1;
+
+USE finances;
+SHOW CREATE TABLE users;
+
+USE finances;
+DELETE FROM nombre_tabla;
+
+USE finances;
+ALTER TABLE nombre_tabla
+CHANGE nombre_viejo_campo nombre_nuevo_campo TINYINT(1) DEFAULT NULL;
+
+----- 
+
+TABLA PARA LOS USUARIOS
+
+USE finances;
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    nickname VARCHAR(30) DEFAULT NULL,
+    email VARCHAR(30) DEFAULT NULL UNIQUE,
+    password VARCHAR(60) DEFAULT NULL,
+    token VARCHAR(32) DEFAULT NULL,
+    confirmed TINYINT(1) DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+USE finances;
+ALTER TABLE users
+ADD CONSTRAINT unique_email UNIQUE (email);
+
+USE finances;
+ALTER TABLE users AUTO_INCREMENT = 1;
+INSERT INTO users 
+(nickname, email, password, token, confirmed) VALUES
+('lionel prats', 'lionel.prats.c@gmail.com', '$2y$10$nsIVXxl6rYSms1BH1LrJnuYCh2w52RMNHfjgOeoE0xcFVSajYUvgC', '', 1)
+
+USE finances;
+SHOW CREATE TABLE users;
+
+-----
+
+TABLA PARA LOS TIPO DE CATEGORIAS
+
+USE finances;
+DROP TABLE IF EXISTS types;
+CREATE TABLE types (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(30) DEFAULT NULL UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+USE finances;
+ALTER TABLE types AUTO_INCREMENT = 1;
+INSERT INTO types 
+(name) VALUES
+('gasto'),
+('ingreso'),
+('inversión')
+
+-----
+
+TABLA PARA LAS CUENTAS DE UN USUARIO
+
+USE finances;
+DROP TABLE IF EXISTS accounts;
+CREATE TABLE accounts (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    url varchar(32) DEFAULT NULL,
+    id_user INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT unique_name_id_user UNIQUE (name, id_user)
+);
+
+USE finances;
+DELETE FROM accounts;
+ALTER TABLE accounts AUTO_INCREMENT = 1;
+INSERT INTO accounts 
+(name, url, id_user) VALUES
+('abril 2023', 'asdasdasdag', 1),
+('tapiceria', 'fdfsvsdfsdf', 2),
+('casa', 'asdasdasdqa', 2),
+('mayo 2023', 'ffddsfdsfsd', 1),
+('junio 2023', 'ffddsfdsfsd', 1),
+('julio 2023', 'ffddsfdsfsd', 1)
+
+USE finances;
+SHOW CREATE TABLE accounts;
+
+-----
+
+TABLA PARA LAS CATEGORIAS
+
+USE finances;
+DROP TABLE IF EXISTS categories;
+CREATE TABLE categories (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    color VARCHAR(10) DEFAULT NULL,
+    priority TINYINT(1),
+    id_user INT(11),
+    id_type INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_type) REFERENCES types(id) ON DELETE CASCADE,
+    CONSTRAINT unique_name_id_user_id_type UNIQUE (name, id_user, id_type)
+);
+
+
+USE finances;
+DELETE FROM categories;
+ALTER TABLE categories AUTO_INCREMENT = 1;
+INSERT INTO categories 
+(name, color, priority, id_user, id_type) VALUES
+('abl', 'skyblue', 0, 1, 1),
+('almuerzo', 'skyblue', 0, 1, 1),
+('aysa', 'skyblue', 0, 1, 1),
+('británico', 'skyblue', 0, 1, 1),
+('carrefour', 'skyblue', 0, 1, 1),
+('abono motorola', 'skyblue', 0, 1, 1),
+('abono xiaomi', 'skyblue', 0, 1, 1),
+('delivery', 'skyblue', 0, 1, 1),
+('dietética', 'skyblue', 0, 1, 1),
+('edesur', 'skyblue', 0, 1, 1),
+('expensas', 'skyblue', 0, 1, 1),
+('farmacia', 'skyblue', 0, 1, 1),
+('fiambrería', 'skyblue', 0, 1, 1),
+('internet casa', 'skyblue', 0, 1, 1),
+('lore', 'skyblue', 0, 1, 1),
+('master francés', 'skyblue', 0, 1, 1),
+('moto', 'skyblue', 0, 1, 1),
+('netflix', 'skyblue', 0, 1, 1),
+('panadería', 'skyblue', 0, 1, 1),
+('taxi', 'skyblue', 1, 1, 1),
+('trabajo', 'skyblue', 0, 1, 2),
+('tuenti', 'skyblue', 0, 1, 1),
+('utn fijo', 'skyblue', 0, 1, 1),
+('utn variables', 'skyblue', 0, 1, 1),
+('varios', 'skyblue', 0, 1, 1),
+('verdulería', 'skyblue', 0, 1, 1),
+('visa ciudad', 'skyblue', 0, 1, 1),
+('visa lupita', 'skyblue', 0, 1, 1),
+('ventas local', 'skyblue', 0, 2, 2),
+('ventas mp', 'skyblue', 0, 2, 2),
+('alquiler local', 'skyblue', 0, 2, 1)
+
+USE finances;
+SHOW CREATE TABLE categories;
+
+USE finances;
+ALTER TABLE categories
+ALTER COLUMN priority SET DEFAULT 0;
+
+----- 
+
+TABLA PARA LAS SUBCATEGORIAS 
+
+USE finances;
+DROP TABLE subcategories;
+
+USE finances;
+DROP TABLE IF EXISTS subcategories;
+CREATE TABLE subcategories (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    id_user INT(11),
+    id_category INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE,
+    CONSTRAINT unique_name_id_user_id_category UNIQUE (name, id_user, id_category)
+);
+
+
+
+USE finances;
+DROP TABLE IF EXISTS subcategories;
+CREATE TABLE subcategories (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+    id_category INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE,
+    CONSTRAINT unique_name_id_category UNIQUE (name, id_category)
+);
+
+USE finances;
+DELETE FROM subcategories;
+ALTER TABLE subcategories AUTO_INCREMENT = 1;
+INSERT INTO subcategories 
+(name, id_category) VALUES
+('cecaitra', 21),
+('taxi', 21),
+('ayudín', 20),
+('burocráticos', 20),
+('combustible', 20),
+('didi', 20),
+('lavados', 20),
+('mantenimiento', 20),
+('monotributo', 20),
+('patente', 20),
+('seguro', 20),
+('tentempié', 20),
+('ventas locas', 29),
+('ventas mp', 30),
+('alquiler', 31)
+
+USE finances;
+SHOW CREATE TABLE subcategories;
+
+----- 
+
+TABLA PARA LOS ITEMS 
+
+USE finances;
+DROP TABLE items;
+
+USE finances;
+DELETE FROM items;
+
+
+
+
+
+
+
+
+USE finances;
+DROP TABLE IF EXISTS items;
+CREATE TABLE items (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) DEFAULT NULL,
+    value DECIMAL(11, 2) DEFAULT NULL,
+    date DATE DEFAULT NULL,
+    id_user INT(11),
+    id_count INT(11),
+    id_category INT(11),
+    id_subcategory INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_count) REFERENCES accounts(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_category) REFERENCES categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_subcategory) REFERENCES subcategories(id) ON DELETE CASCADE
+);
+
+
+USE finances;
+DROP TABLE IF EXISTS items;
+CREATE TABLE items (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(60) DEFAULT NULL,
+    value DECIMAL(11, 2) DEFAULT NULL,
+    date DATE DEFAULT NULL,
+    id_subcategory INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_subcategory) REFERENCES subcategories(id) ON DELETE CASCADE
+);
+
+
+USE finances;
+DELETE FROM items;
+ALTER TABLE items AUTO_INCREMENT = 1;
+INSERT INTO items 
+(name, value, date, id_subcategory) VALUES
+('sueldo', 250000, '2023-07-05', 1),
+('jornal', 13501.45, '2023-07-07', 2),
+('jornal', 14105.41, '2023-07-14', 2),
+('jornal', 12847.05, '2023-07-21', 2),
+('jornal', 13627.33, '2023-07-28', 2),
+('alquiler', 75000, '2023-07-09', 15),
+('alquiler', 750000, '2023-08-09', 15),
+('alquiler', 900000, '2023-09-09', 15)
+
+
+
+
+ALTER TABLE items AUTO_INCREMENT = 1;
+
+USE finances;
+SHOW CREATE TABLE items;
+
+----- 
+
+CONSULTAS DE PRUEBA 
+
+SELECT * 
+FROM items I
+JOIN subcategories SC ON I.id_subcategory = SC.id 
