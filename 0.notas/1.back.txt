@@ -39,8 +39,14 @@ git config user.email "lionel.prats.c@gmail.com"
 git config user.name "lionel-prats"
 git commit -m "first commit"
 
-5) Sincronizo ambos repositorios vvv 
+5) creo y me paro en la rama main 
 
-git branch -M main
-git remote add origin https://github.com/lionel-prats/lp-2023-uptask-php-mysql-mvc.git
+git branch -M main (por defecto, tenia creada solo la rama "master" - calculo que se crea con el git init -)
+
+6) Sincronizo ambos repositorios vvv 
+
+git remote add origin https://github.com/lionel-prats/finances.git
+
+7) hago el primer push 
+
 git push -u origin main

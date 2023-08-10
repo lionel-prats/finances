@@ -1,0 +1,68 @@
+comportate como experto en mysql
+
+como le agrego una columna a una tabla que ya existe en mi base de datos?
+
+ALTER TABLE accounts
+ADD COLUMN wallet VARCHAR(200);
+
+estoy trabajando con PHP. La instancia de una clase serializada se puede guardar en una base de datos?
+
+class Wallet {
+    public $id;
+    public $account;
+    private $extraProperties = array();
+
+    public function __construct($args) {
+        $this->id = $args['id'];
+        $this->account = $args['account'];
+
+        // Asignar las propiedades adicionales
+        foreach ($args as $key => $value) {
+            if ($key !== 'id' && $key !== 'account') {
+                $this->extraProperties[$key] = $value;
+            }
+        }
+    }
+
+    public function __set($name, $value) {
+        $this->extraProperties[$name] = $value;
+    }
+
+    public function __get($name) {
+        if (array_key_exists($name, $this->extraProperties)) {
+            return $this->extraProperties[$name];
+        }
+        return null;
+    }
+}
+
+$wallet = new Wallet($args);
+$wallet->billetera = '12000'; // Asignar valor a la propiedad "billetera"
+echo $wallet->billetera; // Imprimir el valor de la propiedad "billetera"
+
+----- 
+
+Lunes 03/07/2023
+
+CREATE TABLE `accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  `url` varchar(32) DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_name_id_user` (`name`,`id_user`),
+  KEY `id_user` (`id_user`),
+  CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4
+
+tengo esta tabla en una db.
+necesito agregarle la columna id_account que va a a ser FK, referenciando a la tabla accounts, campo id
+
+USE finances;
+ALTER TABLE items
+ADD COLUMN id_account INT(11),
+ADD CONSTRAINT fk_accounts_id_account
+FOREIGN KEY (id_account) REFERENCES accounts(id);
+

@@ -1,0 +1,3 @@
+USE finances;
+SELECT * 
+from items

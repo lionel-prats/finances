@@ -30,8 +30,9 @@
             background-color: darken($color: v.$indigo, $amount: 5%);
         }
         a {
-            color: v.$blanco;
+            font-weight: 700;
             text-transform: uppercase;
+            color: v.$blanco;
         }
     }
 }

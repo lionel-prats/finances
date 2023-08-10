@@ -1,0 +1,57 @@
+a:7:{
+    s:9:"billetera";s:4:"4750";
+    s:10:"caja_chica";s:3:"890";
+    s:11:"caja_grande";s:5:"15500";
+    s:12:"banco_ciudad";s:7:"1815.01";
+    s:13:"banco_frances";s:5:"100.3";
+    s:4:"didi";s:7:"3441.93";
+    s:12:"mercado_pago";s:8:"41214.06";
+}
+
+a:7:{
+    s:9:"billetera";s:5:"10000";
+    s:10:"caja_chica";s:3:"840";
+    s:11:"caja_grande";s:5:"10300";
+    s:12:"banco_ciudad";s:5:"30000";
+    s:13:"banco_frances";s:5:"100.3";
+    s:4:"didi";s:7:"3441.93";
+    s:12:"mercado_pago";s:7:"7963.49";
+}
+
+a:8:{
+    s:9:"billetera";s:5:"10000";
+    s:10:"caja_chica";s:3:"530";
+    s:11:"caja_grande";s:4:"7500";
+    s:12:"banco_ciudad";s:3:"100";
+    s:13:"banco_frances";s:3:"100";
+    s:4:"didi";s:7:"3858.32";
+    s:9:"inversion";s:5:"60000";
+    s:12:"mercado_pago";s:9:"129014.54";
+}
+
+1) en el controlador DashboardController->wallet() se setea el INSERT en walltes
+2) http://localhost:3000/billetera -> un GET a esta vista ejecuta el INSERT en la DB
+
+* Consulta SQL para chequear que los GASTOS de Julio estén correctos vvv
+USE finances;
+SELECT SUM(VALUE)
+FROM items
+WHERE id NOT IN (12, 22, 54, 55, 56, 74, 90)
+
+* Consulta SQL para chequear que los INGRESOS de Julio estén correctos vvv
+USE finances;
+SELECT SUM(VALUE)
+FROM items
+WHERE id IN (12, 22, 54, 55, 56, 74, 90)
+
+a:9:{
+    s:12:"mercado_pago";s:8:"73386.59";
+    s:7:"reserva";s:4:"5500";
+    s:9:"billetera";s:4:"5000";
+    s:11:"caja_grande";s:5:"12800";
+    s:4:"didi";s:1:"0";
+    s:10:"caja_chica";s:3:"640";
+    s:12:"banco_ciudad";s:4:"1.12"
+    ;s:13:"banco_frances";s:3:"100";
+    s:9:"inversion";s:6:"120000";
+    }

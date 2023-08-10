@@ -325,8 +325,86 @@ SHOW CREATE TABLE items;
 
 ----- 
 
+Domingo 02/07/2023 
+
+TABLA PARA LAS BILLETERAS DE USUARIO
+
+USE finances;
+DROP TABLE IF EXISTS wallets;
+CREATE TABLE wallets (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    wallet VARCHAR(200) DEFAULT NULL,
+    date DATE DEFAULT NULL,
+    id_user INT(11),
+    id_account INT(11),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_account) REFERENCES accounts(id) ON DELETE CASCADE,
+    CONSTRAINT unique_date_id_user_idaccount UNIQUE (date, id_user, id_account)
+);
+
+USE finances;
+ALTER TABLE wallets AUTO_INCREMENT = 1;
+
+USE finances;
+SHOW CREATE TABLE wallets;
+
+-----
+
 CONSULTAS DE PRUEBA 
 
 SELECT * 
 FROM items I
 JOIN subcategories SC ON I.id_subcategory = SC.id 
+
+----- 
+
+Lunes 03/07/2023
+
+items
+id name value date       id_user id_account id_category id_type
+1  didi 300   2023-07-03 1       3          1           1
+
+SELECT * 
+FROM ITEMS 
+WHERE id_user = 1
+AND id_account = 3
+AND id_type = 1
+AND id_category = 1
+
+----- 
+
+Sábado 15/07/2023
+
+USE finances;
+DROP TABLE IF EXISTS usd;
+CREATE TABLE usd (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    date DATE DEFAULT NULL,
+    official_purchase DECIMAL(11, 2) DEFAULT NULL,
+    official_sale DECIMAL(11, 2) DEFAULT NULL,
+    unofficial_purchase DECIMAL(11, 2) DEFAULT NULL,
+    unofficial_sale DECIMAL(11, 2) DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+USE finances;
+DROP TABLE IF EXISTS investments;
+CREATE TABLE investments (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    bank VARCHAR(50) DEFAULT NULL,
+    anr DECIMAL(11, 2) DEFAULT NULL,
+    capital DECIMAL(11, 2) DEFAULT NULL,
+    interest DECIMAL(11, 2) DEFAULT NULL,
+    date DATE DEFAULT NULL,
+    expiration DATE DEFAULT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+como escribo "capital" e "interes" (terminos de inversion financiera) en ingles?

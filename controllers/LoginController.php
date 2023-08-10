@@ -29,7 +29,7 @@ class LoginController {
                             $_SESSION["nickname"] = $user->nickname;
                             $_SESSION["email"] = $user->email;
                             $_SESSION["login"] = true;
-                            header("Location: /dashboard");
+                            header("Location: /dashboard?user=$user->id");
                         }
                     } else {
                         User::setAlerta("error", "Credenciales inválidas");

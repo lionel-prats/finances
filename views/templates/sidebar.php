@@ -4,5 +4,6 @@
         <a class="<?php echo ($titulo === 'Cuentas') ? 'activo' : ''; ?>" href="/dashboard">Cuentas</a>
         <a class="<?php echo $titulo === 'Crear Cuenta' ? 'activo' : ''; ?>" href="/crear-cuenta">Crear Cuenta</a>
         <a class="<?php echo $titulo === 'Perfil' ? 'activo' : ''; ?>" href="/perfil">Perfil</a>
+        <a class="<?php echo $titulo === 'Billetera' ? 'activo' : ''; ?>" href="/billetera">Billetera</a>
     </nav>
 </aside>
